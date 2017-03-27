@@ -6,6 +6,7 @@ var app = angular.module("app", []);
 
 app.controller("firstController", function($scope){
 
+    // business logic
     $scope.name = "Hello IRIS";
 
 });
