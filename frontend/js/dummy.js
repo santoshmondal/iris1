@@ -5,6 +5,7 @@ $rootScope.$on('$locationChangeStart', function (event, next, current) {
     var absurl = window.location.pathname;
 
     var restrictedPage = true;
+    var unlist = [];
     if(absurl.match("login.html"+"$") || absurl.match("accregi.html"+"$") ) {
         restrictedPage = false;
     }

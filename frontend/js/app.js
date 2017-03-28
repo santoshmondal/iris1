@@ -9,6 +9,12 @@ app.controller("firstController", function($scope){
     // business logic
     $scope.name = "Hello IRIS";
 
+
+    $scope.clickme = function(){
+
+        $scope.name = "IRIS INDIA";
+    };
+
 });
 
 
