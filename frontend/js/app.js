@@ -1,7 +1,7 @@
 /**
  * Created by santosh on 3/27/17.
  */
-var app = angular.module("app", []);
+var app = angular.module("app", ["ngTable"]);
 
 
 app.controller("firstController", function($scope){
@@ -15,6 +15,12 @@ app.controller("firstController", function($scope){
         $scope.name = "IRIS INDIA";
     };
 
+});
+
+
+
+app.controller("tableController", function($scope, NgTableParams){
+    console.log("hello");
 });
 
 
