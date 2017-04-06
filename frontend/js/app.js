@@ -49,6 +49,12 @@ app.controller("tableController", function($scope, NgTableParams){
     // CUSTOM CONFIG
     $scope.customConfigTableParams = new NgTableParams({"count":5}, {"counts": [5, 10, 20], "dataset": simpleList});
 
+
+
+    // CUSTOM-1 CONFIG
+    var initialParam = {"count":5, "sorting": {"name": "asc"}};
+    $scope.customConfigTableParams1 = new NgTableParams(initialParam, {"counts": [5, 10, 20], "dataset": simpleList});
+
 });
 
 
