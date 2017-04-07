@@ -96,11 +96,21 @@ app.controller("tableController1", function($scope, $filter,  NgTableParams){
             var perPageCount = params.count();
 
             var totalPages = (Math.floor(totalLength/perPageCount)) + ((totalLength%perPageCount==0)?0:1);
-            console.log(totalPages);
+            if(currentPage == totalPages) {
 
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
 
-            var pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-            return pageArray;
+                params.total(simpleList.length);
+
+                var pageArray = simpleList.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                return pageArray;
+            } else{
+                var pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                return pageArray;
+            }
         }
     });
 });
