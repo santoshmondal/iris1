@@ -90,7 +90,16 @@ app.controller("tableController1", function($scope, $filter,  NgTableParams){
             var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : simpleList;
             params.total(orderedData.length);
 
-            var pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count())
+
+            var currentPage = params.page();
+            var totalLength = simpleList.length;
+            var perPageCount = params.count();
+
+            var totalPages = (Math.floor(totalLength/perPageCount)) + ((totalLength%perPageCount==0)?0:1);
+            console.log(totalPages);
+
+
+            var pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
             return pageArray;
         }
     });
