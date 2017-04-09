@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"></link>
+    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css"></link>
+
+
+    <script src="js/app.js"></script>
+</head>
+
+<body ng-controller="tableController2">
+
+
+    <!--Section 2-->
+    <div class="container-fluid">
+        <!--Filter and Sorting-->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <table ng-table="customConfigTableParams3" class="table table-condensed table-bordered table-striped">
+                        <tr ng-repeat="row in $data">
+                            <td data-title="'Name'" sortable="'name'" filter="{name: 'text'}">{{row.name}}</td>
+                            <td data-title="'Age'" sortable="'age'" filter="{age: 'number'}">{{row.age}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
