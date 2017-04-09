@@ -164,38 +164,47 @@ app.controller("tableController3", function($scope, $q, $http, $filter,  NgTable
     $scope.customConfigTableParams3 = new NgTableParams(initialParam, {
         "counts": [5, 10, 20],
         "getData": function(params) {
-
-            var currentPage = params.page();
-            var totalLength = dataTableList.length;
-            var perPageCount = params.count();
-
-            var totalPages = (Math.floor(totalLength/perPageCount)) + ((totalLength%perPageCount==0)?0:1);
-
-            if(dataTableList.length == 0) {
-                var promise = $http.get('./data.json')
-                    .then(function(data) {
-                        dataTableList = (data.data.dataList)?data.data.dataList:[];
-
-                        return filterAndReturnArray(params, dataTableList);
-                    });
-
-                return $q.resolve(promise);
-            }else if(currentPage == totalPages){
-                // TODO fetch from server
-                var promise = $http.get('./data.json')
-                    .then(function(data) {
-                        dataTableList = (data.data.dataList)? dataTableList.concat(data.data.dataList):dataTableList;
-
-                        return filterAndReturnArray(params, dataTableList);
-                    });
-
-                return $q.resolve(promise);
-
-            } else {
-                return filterAndReturnArray(params, dataTableList);
-            }
+            var url = "./data.json";
+            return getDataCustom(url, params, dataTableList);
         }
     });
+
+
+    function getDataCustom(url, params, processDataTableList) {
+        var currentPage = params.page();
+        var totalLength = processDataTableList.length;
+        var perPageCount = params.count();
+
+        var totalPages = (Math.floor(totalLength/perPageCount)) + ((totalLength%perPageCount==0)?0:1);
+
+        if(processDataTableList.length == 0) {
+            var promise = $http.get(url)
+                .then(function(data) {
+                    var tempList = (data.data.dataList)?data.data.dataList:[];
+                    Array.prototype.push.apply(processDataTableList, tempList);
+
+
+                    return filterAndReturnArray(params, processDataTableList);
+                });
+
+            return $q.resolve(promise);
+        }else if(currentPage == totalPages){
+            // TODO fetch from server
+            var promise = $http.get(url)
+                .then(function(data) {
+                    var tempList = (data.data.dataList)? data.data.dataList:[];
+                    Array.prototype.push.apply(processDataTableList, tempList);
+
+                    return filterAndReturnArray(params, processDataTableList);
+                });
+
+            return $q.resolve(promise);
+
+        } else {
+            return filterAndReturnArray(params, processDataTableList);
+        }
+    };
+
 
     function filterAndReturnArray(params, processDataTableList){
         var pageArray = [];
