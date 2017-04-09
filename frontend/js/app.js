@@ -159,13 +159,21 @@ app.controller("tableController2", function($scope, $q, $http, $filter,  NgTable
 app.controller("tableController3", function($scope, $q, $http, $filter,  NgTableParams){
 
     // CUSTOM-1 CONFIGG
-    var dataTableList = [];
+    var dataTableList = [], dataTableList1=[];
     var initialParam = {"page":1, "count":5};
     $scope.customConfigTableParams3 = new NgTableParams(initialParam, {
         "counts": [5, 10, 20],
         "getData": function(params) {
             var url = "./data.json";
             return getDataCustom(url, params, dataTableList);
+        }
+    });
+
+    $scope.customConfigTableParams4 = new NgTableParams(initialParam, {
+        "counts": [5, 10, 20],
+        "getData": function(params) {
+            var url = "./data.json";
+            return getDataCustom(url, params, dataTableList1);
         }
     });
 
