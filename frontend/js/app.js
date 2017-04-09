@@ -159,27 +159,58 @@ app.controller("tableController2", function($scope, $q, $http, $filter,  NgTable
 app.controller("tableController3", function($scope, $q, $http, $filter,  NgTableParams){
 
     // CUSTOM-1 CONFIGG
+    var dataTableList = [];
     var initialParam = {"page":1, "count":5};
     $scope.customConfigTableParams3 = new NgTableParams(initialParam, {
         "counts": [5, 10, 20],
         "getData": function(params) {
 
-            var promise = $http.get('./data.json')
-            .then(function(data) {
-                var simpleList = data.data.dataList;
+            var currentPage = params.page();
+            var totalLength = dataTableList.length;
+            var perPageCount = params.count();
 
-                var filteredData = params.filter() ? $filter('filter')(simpleList, params.filter()) : simpleList;
-                var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : simpleList;
+            var totalPages = (Math.floor(totalLength/perPageCount)) + ((totalLength%perPageCount==0)?0:1);
 
-                params.total(orderedData.length);
+            if(dataTableList.length == 0) {
+                var promise = $http.get('./data.json')
+                    .then(function(data) {
+                        dataTableList = (data.data.dataList)?data.data.dataList:[];
 
-                var pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                return pageArray;
-            });
+                        return filterAndReturnArray(params, dataTableList);
+                    });
 
-            return $q.resolve(promise);
+                return $q.resolve(promise);
+            }else if(currentPage == totalPages){
+                // TODO fetch from server
+                var promise = $http.get('./data.json')
+                    .then(function(data) {
+                        dataTableList = (data.data.dataList)? dataTableList.concat(data.data.dataList):dataTableList;
+
+                        return filterAndReturnArray(params, dataTableList);
+                    });
+
+                return $q.resolve(promise);
+
+            } else {
+                return filterAndReturnArray(params, dataTableList);
+            }
         }
     });
+
+    function filterAndReturnArray(params, processDataTableList){
+        var pageArray = [];
+
+        if(params && processDataTableList) {
+            var filteredData = params.filter() ? $filter('filter')(processDataTableList, params.filter()) : processDataTableList;
+            var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : processDataTableList;
+            params.total(orderedData.length);
+
+            pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+        }
+
+        return pageArray;
+    };
+
 });
 
 
