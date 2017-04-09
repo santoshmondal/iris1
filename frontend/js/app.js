@@ -102,6 +102,76 @@ app.controller("tableController1", function($scope, $filter,  NgTableParams){
                 simpleList.push({"age":31, "name":"wipro India Ltd"});
                 simpleList.push({"age":31, "name":"wipro India Ltd"});
                 simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+
+                params.total(simpleList.length);
+
+                var pageArray = simpleList.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                return pageArray;
+            } else{
+                var pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                return pageArray;
+            }
+        }
+    });
+});
+
+
+
+
+app.controller("tableController2", function($scope, $filter,  NgTableParams){
+    // First Param is cofig object, and second param is your data list
+    var simpleList = [];
+
+    simpleList.push({"age":11, "name":"Iris India Ltd"});
+    simpleList.push({"age":12, "name":"Affixus Pvt Ltd"});
+    simpleList.push({"age":11, "name":"Rediff India Ltd"});
+    simpleList.push({"age":12, "name":"Infosys Pvt Ltd"});
+    simpleList.push({"age":21, "name":"Cts India Ltd"});
+    simpleList.push({"age":22, "name":"Capgemini Pvt Ltd"});
+    simpleList.push({"age":31, "name":"wipro India Ltd"});
+    simpleList.push({"age":22, "name":"Capgemini Pvt Ltd"});
+    simpleList.push({"age":31, "name":"wipro India Ltd"});
+    simpleList.push({"age":22, "name":"Capgemini Pvt Ltd"});
+    simpleList.push({"age":31, "name":"wipro India Ltd"});
+    simpleList.push({"age":31, "name":"wipro India Ltd"});
+    simpleList.push({"age":31, "name":"wipro India Ltd"});
+    simpleList.push({"age":31, "name":"wipro India Ltd"});
+    simpleList.push({"age":31, "name":"wipro India Ltd"});
+
+
+    // CUSTOM-1 CONFIGG
+    var initialParam = {};
+    $scope.customConfigTableParams2 = new NgTableParams(initialParam, {
+        "counts": [5, 10, 20],
+        "getData": function (params) {
+            var filteredData = params.filter() ? $filter('filter')(simpleList, params.filter()) : simpleList;
+            var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : simpleList;
+            params.total(orderedData.length);
+
+
+            var currentPage = params.page();
+            var totalLength = simpleList.length;
+            var perPageCount = params.count();
+
+            var totalPages = (Math.floor(totalLength/perPageCount)) + ((totalLength%perPageCount==0)?0:1);
+            if(currentPage == totalPages) {
+
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
+                simpleList.push({"age":31, "name":"wipro India Ltd"});
 
                 params.total(simpleList.length);
 
