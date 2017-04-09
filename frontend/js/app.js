@@ -127,9 +127,6 @@ app.controller("tableController1", function($scope, $filter,  NgTableParams){
  * http://codepen.io/christianacca/pen/VLqqjP?editors=1010
  */
 app.controller("tableController2", function($scope, $q, $http, $filter,  NgTableParams){
-    // First Param is cofig object, and second param is your data list
-    var simpleList = [];
-
 
     // CUSTOM-1 CONFIGG
     var initialParam = {"page":1, "count":5};
@@ -160,9 +157,6 @@ app.controller("tableController2", function($scope, $q, $http, $filter,  NgTable
  * http://codepen.io/christianacca/pen/VLqqjP?editors=1010
  */
 app.controller("tableController3", function($scope, $q, $http, $filter,  NgTableParams){
-    // First Param is cofig object, and second param is your data list
-    var simpleList = [];
-
 
     // CUSTOM-1 CONFIGG
     var initialParam = {"page":1, "count":5};
@@ -170,18 +164,20 @@ app.controller("tableController3", function($scope, $q, $http, $filter,  NgTable
         "counts": [5, 10, 20],
         "getData": function(params) {
 
-            return $http.get('./data.json')
-                .then(function(data) {
-                    var simpleList = data.data.dataList;
+            var promise = $http.get('./data.json')
+            .then(function(data) {
+                var simpleList = data.data.dataList;
 
-                    var filteredData = params.filter() ? $filter('filter')(simpleList, params.filter()) : simpleList;
-                    var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : simpleList;
+                var filteredData = params.filter() ? $filter('filter')(simpleList, params.filter()) : simpleList;
+                var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : simpleList;
 
-                    params.total(orderedData.length);
+                params.total(orderedData.length);
 
-                    var pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                    return pageArray;
-                });
+                var pageArray = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                return pageArray;
+            });
+
+            return $q.resolve(promise);
         }
     });
 });
