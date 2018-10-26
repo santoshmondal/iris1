@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="./node_modules/ng-infinite-scroll/build/ng-infinite-scroll.min.js"></script>
+
+    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"></link>
+    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.css"></link>
+
+
+    <script src="js/app.js"></script>
+    <script src="js/app-scroll.js"></script>
+</head>
+
+<body >
+
+    <!--Section 2-->
+    <div class="container-fluid">
+        <!--Filter and Sorting-->
+        <div class="row" ng-controller="scrollController">
+            <div class="col-sm-12"   infinite-scroll="getMoreData()" infinite-scroll-distance="3">
+                <table ng-table="tableParams" show-filter="true"   class="table table-condensed table-bordered table-striped">
+                    <tr ng-repeat="row in data">
+                        <td data-title="'Name'" sortable="'name'" filter="{name: 'text'}">{{row.name}}</td>
+                        <td data-title="'Age'" sortable="'age'" filter="{age: 'number'}">{{row.age}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

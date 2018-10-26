@@ -1,7 +1,7 @@
 /**
  * Created by santosh on 3/27/17.
  */
-var app = angular.module("app", ["ngTable"]);
+var app = angular.module("app", ["ngTable", "infinite-scroll"]);
 
 
 app.controller("firstController", function($scope){
